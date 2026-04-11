@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARVIS VAULT</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            color: white;
+            background-color: #020617;
+            min-height: 100vh;
+        }
+        body::before {
+            content: ""; position: fixed; inset: 0; width: 100%; height: 100%;
+            background: url("together.img.jpeg") center / cover no-repeat;
+            z-index: -3; 
+        }
+        body::after {
+            content: ""; position: fixed; inset: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Simple overlay for text readability */
+            z-index: -2;
+        }
+
+        /* HEADER */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px 60px 20px;
+            background: linear-gradient(180deg, rgba(0,20,50,0.9) 0%, transparent 100%);
+        }
+        .header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00eaff, #007bff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        .count-badge {
+            background: rgba(0,255,255,0.1);
+            border: 1px solid rgba(0,255,255,0.3);
+            color: #00eaff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .back-btn {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 16px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+        .back-btn:hover { color: #00eaff; border-color: #00eaff; }
+
+        /* VAULT CONTENT */
+        .vault-content {
+            padding: 20px 40px 100px;
+            min-height: 60vh;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #00eaff;
+            margin: 30px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(0,255,255,0.15);
+        }
+
+        /* GALLERY GRID */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        /* GALLERY ITEM */
+        .gallery-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            cursor: pointer;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 30px rgba(0,255,255,0.15);
+        }
+        .gallery-item img,
+        .gallery-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* VIDEO CARD GLOW */
+        .gallery-item.is-video {
+            border-color: rgba(0,200,255,0.4);
+            animation: videoGlow 2.5s ease-in-out infinite alternate;
+        }
+        @keyframes videoGlow {
+            from { box-shadow: 0 0 8px rgba(0,200,255,0.2); }
+            to   { box-shadow: 0 0 24px rgba(0,200,255,0.7); }
+        }
+
+        /* VIDEO BADGE */
+        .video-play-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: linear-gradient(135deg, rgba(0,200,255,0.9), rgba(0,80,200,0.9));
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 4px 8px;
+            border-radius: 20px;
+            z-index: 15;
+            pointer-events: none;
+        }
+
+        /* DELETE BUTTON */
+        .delete-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 34px;
+            height: 34px;
+            background: rgba(220, 30, 70, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 20;
+            opacity: 0;
+            transform: scale(0.7);
+            transition: opacity 0.2s, transform 0.2s;
+            box-shadow: 0 2px 12px rgba(220,30,70,0.5);
+        }
+        .delete-btn svg { width: 15px; height: 15px; stroke: white; fill: none; stroke-width: 2.5; }
+        .gallery-item:hover .delete-btn { opacity: 1; transform: scale(1); }
+        .delete-btn:hover { background: #ff1a3c !important; transform: scale(1.2) !important; }
+
+        /* DATE OVERLAY */
+        .item-overlay {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 100%);
+            padding: 20px 10px 8px;
+            pointer-events: none;
+        }
+        .item-date {
+            font-size: 11px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Double-click hint */
+        .dbl-hint {
+            position: absolute;
+            bottom: 8px;
+            right: 10px;
+            font-size: 9px;
+            color: rgba(255,255,255,0.4);
+            pointer-events: none;
+        }
+
+        /* EMPTY STATE */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 50vh;
+            gap: 16px;
+            color: rgba(255,255,255,0.3);
+        }
+        .empty-state svg {
+            width: 80px; height: 80px;
+            stroke: rgba(0,255,255,0.3);
+        }
+        .empty-state p { font-size: 1.2rem; font-weight: 600; }
+        .empty-state span { font-size: 0.85rem; }
+
+        /* FLOATING ADD BUTTON */
+        .floating-add {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00eaff, #007bff);
+            color: #000;
+            font-size: 28px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            transition: 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 500;
+        }
+        .floating-add:hover { transform: scale(1.12); box-shadow: 0 0 30px rgba(0, 255, 255, 0.8); }
+
+        /* MODAL */
+        #modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: linear-gradient(135deg, #0a192f, #0d1f3c);
+            padding: 36px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            text-align: center;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 0 40px rgba(0,255,255,0.1);
+        }
+        .modal-content h2 { color: #00eaff; font-size: 22px; margin-bottom: 24px; }
+        .upload-area {
+            border: 2px dashed rgba(0,255,255,0.3);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .upload-area:hover { border-color: rgba(0,255,255,0.7); background: rgba(0,255,255,0.03); }
+        .upload-area input[type="file"] { width: 100%; color: rgba(255,255,255,0.7); font-size: 14px; cursor: pointer; }
+        .upload-area p { color: rgba(255,255,255,0.4); font-size: 12px; margin-top: 10px; }
+        #preview-img { width: 100%; max-height: 160px; object-fit: cover; border-radius: 8px; margin-top: 12px; display: none; }
+        .modal-btns { display: flex; gap: 12px; justify-content: center; }
+        .btn-save {
+            background: linear-gradient(135deg, #00eaff, #007bff);
+            color: #000; border: none; padding: 12px 28px; border-radius: 10px;
+            font-weight: bold; font-size: 15px; cursor: pointer; transition: 0.3s; flex: 1;
+        }
+        .btn-save:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(0,255,255,0.4); }
+        .btn-cancel {
+            background: rgba(255, 255, 255, 0.08);
+            color: white; border: 1px solid rgba(255,255,255,0.15);
+            padding: 12px 28px; border-radius: 10px; font-size: 15px;
+            cursor: pointer; transition: 0.3s; flex: 1;
+        }
+        .btn-cancel:hover { background: rgba(255,255,255,0.15); }
+
+        /* LIGHTBOX */
+        #lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.97);
+            z-index: 99999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        #lightbox.active { display: flex; }
+        #lightbox-img {
+            max-width: 92vw;
+            max-height: 88vh;
+            border-radius: 10px;
+            box-shadow: 0 0 40px rgba(0,255,255,0.2);
+            object-fit: contain;
+        }
+        #lightbox-video {
+            max-width: 92vw;
+            max-height: 88vh;
+            border-radius: 10px;
+            box-shadow: 0 0 40px rgba(0,200,255,0.3);
+            outline: none;
+        }
+        .lightbox-close {
+            position: fixed;
+            top: 18px; right: 24px;
+            font-size: 38px;
+            color: white;
+            cursor: pointer;
+            z-index: 100000;
+            line-height: 1;
+            opacity: 0.8;
+            transition: 0.2s;
+        }
+        .lightbox-close:hover { color: #00eaff; opacity: 1; transform: scale(1.1); }
+        .lightbox-nav {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            font-size: 28px;
+            padding: 14px 18px;
+            cursor: pointer;
+            border-radius: 50%;
+            z-index: 100000;
+            transition: 0.2s;
+            backdrop-filter: blur(4px);
+        }
+        .lightbox-nav:hover { background: rgba(0,200,255,0.3); }
+        .lightbox-nav.prev { left: 16px; }
+        .lightbox-nav.next { right: 16px; }
+        .lightbox-hint {
+            position: fixed;
+            bottom: 18px;
+            color: rgba(255,255,255,0.4);
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        /* LOADING */
+        #loading {
+            position: fixed;
+            inset: 0;
+            background: rgba(2,6,23,0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            gap: 16px;
+            color: #00eaff;
+        }
+        .spinner {
+            width: 44px; height: 44px;
+            border: 3px solid rgba(0,255,255,0.2);
+            border-top-color: #00eaff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            .header { padding: 24px 20px 14px; }
+            .header h1 { font-size: 1.8rem; }
+            .vault-content { padding: 10px 16px 100px; }
+            .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
+            .floating-add { bottom: 24px; right: 20px; width: 52px; height: 52px; font-size: 24px; }
+            .delete-btn { opacity: 1; transform: scale(1); }
+        }
+    
+        @media (max-width: 500px) {
+            .gallery-grid { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
+            .gallery-item { min-height: 120px !important; width: 100% !important; aspect-ratio: 1 !important; display: block !important; }
+            .gallery-item img, .gallery-item video { border-radius: 8px !important; }
+        }
+</style>
+</head>
+<body>
+
+    <!-- LOADING SCREEN -->
+    <div id="loading">
+        <div class="spinner"></div>
+        <p>Loading Vault...</p>
+    </div>
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>JARVIS VAULT</h1>
+        <div class="header-right">
+            <span class="count-badge" id="itemCount">0 items</span>
+            <a href="index.html" class="back-btn">← Back to Portfolio</a>
+        </div>
+    </div>
+
+    <!-- VAULT CONTENT -->
+    <div class="vault-content" id="vaultContent"></div>
+
+    <!-- FLOATING ADD BUTTON -->
+    <button class="floating-add" id="vaultAddBtn" title="Add to Vault">+</button>
+
+    <!-- ADD MODAL -->
+    <div id="modal">
+        <div class="modal-content">
+            <h2>Add to Vault</h2>
+            <div class="upload-area">
+                <input type="file" id="fileInput" accept="image/*,video/*" onchange="previewFile()">
+                <p>Supports images and videos (any size)</p>
+                <img id="preview-img" alt="Preview">
+            </div>
+            <div class="modal-btns">
+                <button class="btn-save" id="saveBtn" onclick="addMedia()">Save to Vault</button>
+                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">×</span>
+        <button class="lightbox-nav prev" onclick="slideLightbox(-1)">&#8592;</button>
+        <img id="lightbox-img" src="" alt="Full view" style="display:none;">
+        <video id="lightbox-video" controls style="display:none;"></video>
+        <button class="lightbox-nav next" onclick="slideLightbox(1)">&#8594;</button>
+        <span class="lightbox-hint">ESC to close &nbsp;|&nbsp; ← → to navigate &nbsp;|&nbsp; Double-click card to open</span>
+    </div>
+
+    <!-- MAIN GALLERY SCRIPT — Firebase Cloud Sync (cross-device, permanent) -->
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-storage-compat.js"></script>
+    <script src="firebase-config.js"></script>
+
+    <script>
+        // =============================================
+        // JARVIS VAULT — Firebase Cloud Sync
+        // Images → Firestore (base64 compressed)
+        // Videos → Firebase Storage (raw file) + Firestore (URL ref)
+        // =============================================
+        let galleryData = [];
+        let currentIdx  = 0;
+        const COLLECTION = 'jarvis_vault';
+
+        // Wait for firebase to be ready before loading
+        function waitForFirebase(cb) {
+            if (window.firebaseInitialized !== undefined) {
+                cb();
+            } else {
+                window.addEventListener('firebaseReady', cb, { once: true });
+            }
+        }
+
+        // ─── Render ──────────────────────────────────
+        function renderGallery() {
+            const container = document.getElementById('vaultContent');
+            container.innerHTML = '';
+            document.getElementById('itemCount').textContent =
+                galleryData.length + (galleryData.length === 1 ? ' item' : ' items');
+
+            if (galleryData.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2.5"/>
+                            <circle cx="8.5" cy="8.5" r="1.5" fill="rgba(0,255,255,0.3)" stroke="none"/>
+                            <polyline points="21,15 16,10 11,15.5 8,12 3,18"/>
+                        </svg>
+                        <p>Your vault is empty</p>
+                        <span>Click the + button to add images or videos</span>
+                    </div>`;
+                return;
+            }
+
+            let imagesHTML = '';
+            let videosHTML = '';
+            let hasImages = false, hasVideos = false;
+
+            galleryData.forEach((item, index) => {
+                const isVideo = item.type === 'video';
+                const dateStr = item.date || '';
+                const storagePath = item.storagePath || '';
+
+                const card = `
+                    <div class="gallery-item ${isVideo ? 'is-video' : ''}"
+                         ondblclick="openLightbox(${index})"
+                         title="Double-click to view fullscreen">
+                        ${isVideo
+                            ? `<video src="${item.src}" autoplay muted loop playsinline preload="auto"></video>
+                               <div class="video-play-badge">🎬 VIDEO</div>`
+                            : `<img src="${item.src}" loading="lazy" alt="Vault Item">`
+                        }
+                        <div class="delete-btn" onclick="deleteMedia(${index}, '${item.id}', '${storagePath}', event)">
+                            <svg viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                        </div>
+                        <div class="item-overlay">
+                            <span class="item-date">${dateStr}</span>
+                        </div>
+                        <span class="dbl-hint">⤢ dbl-click</span>
+                    </div>`;
+
+                if (isVideo) { hasVideos = true; videosHTML += card; }
+                else         { hasImages = true; imagesHTML += card; }
+            });
+
+            if (hasImages) container.innerHTML += `<h2 class="section-title">Images Session</h2><div class="gallery-grid">${imagesHTML}</div>`;
+            if (hasVideos) container.innerHTML += `<h2 class="section-title">Videos Session</h2><div class="gallery-grid">${videosHTML}</div>`;
+
+            setTimeout(() => {
+                container.querySelectorAll('video').forEach(v => { v.muted = true; v.play().catch(()=>{}); });
+            }, 100);
+        }
+
+        // ─── Load from Firestore ──────────────────────
+        async function loadGalleryData() {
+            const loading = document.getElementById('loading');
+            if (loading) loading.style.display = 'flex';
+            try {
+                if (!window.db) throw new Error('Firebase not initialized');
+                const snapshot = await window.db.collection(COLLECTION).orderBy('timestamp', 'desc').get();
+                galleryData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch(e) {
+                console.warn('Firebase load failed, trying IndexedDB fallback:', e);
+                try {
+                    galleryData = await loadFromIndexedDB();
+                } catch(e2) {
+                    galleryData = [];
+                }
+            } finally {
+                renderGallery();
+                if (loading) loading.style.display = 'none';
+            }
+        }
+
+        // ─── IndexedDB offline fallback ───────────────
+        async function loadFromIndexedDB() {
+            return new Promise((resolve, reject) => {
+                const req = indexedDB.open('SharanVault', 1);
+                req.onsuccess = e => {
+                    const db = e.target.result;
+                    if (!db.objectStoreNames.contains('media')) { resolve([]); return; }
+                    const r = db.transaction('media','readonly').objectStore('media').getAll();
+                    r.onsuccess = () => resolve(r.result.sort((a,b)=>b.timestamp-a.timestamp));
+                    r.onerror   = () => reject(r.error);
+                };
+                req.onerror = e => reject(e.target.error);
+            });
+        }
+
+        // ─── Upload to Firebase ───────────────────────
+        async function addMedia() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput && fileInput.files[0];
+            if (!file) { alert('Please select a file!'); return; }
+
+            if (!window.db) {
+                alert('Firebase connection not available. Check your internet connection and try again.');
+                return;
+            }
+
+            const loading = document.getElementById('loading');
+            const saveBtn = document.getElementById('saveBtn');
+            if (loading) { loading.style.display = 'flex'; loading.innerHTML = '<div class="spinner"></div><p>Saving to Cloud Vault...</p>'; }
+            if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving...'; }
+
+            try {
+                const isVideo = file.type.startsWith('video/');
+
+                if (loading) loading.innerHTML = `<div class="spinner"></div><p>Uploading to Cloud Storage ${isVideo ? '(Video)' : '(Image)'}...</p>`;
+
+                // Upload to Cloudinary directly (bypasses 1MB size limit and handles big files easily)
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('upload_preset', 'portfolio_vault'); // Created via your dashboard
+
+                const cloudinaryRes = await fetch('https://api.cloudinary.com/v1_1/dnk2p8ndz/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const cloudinaryData = await cloudinaryRes.json();
+
+                if (!cloudinaryRes.ok) {
+                    throw new Error(cloudinaryData.error?.message || 'Cloudinary upload failed');
+                }
+
+                const src = cloudinaryData.secure_url;
+
+                if (loading) loading.innerHTML = '<div class="spinner"></div><p>Syncing to Cloud Vault...</p>';
+
+                // Save only the URL to Firestore (no size limit issues)
+                await window.db.collection(COLLECTION).add({
+                    type: isVideo ? 'video' : 'image',
+                    src,
+                    storagePath: cloudinaryData.public_id,
+                    name: file.name,
+                    date: new Date().toLocaleDateString('en-GB'),
+                    timestamp: Date.now()
+                });
+
+                closeModal();
+                await loadGalleryData();
+                alert('✅ Saved to Cloud Vault! Visible on all devices instantly.');
+
+            } catch(err) {
+                console.error('Save failed:', err);
+                alert('Save failed: ' + err.message);
+            } finally {
+                if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save to Vault'; }
+                if (loading) { loading.innerHTML = '<div class="spinner"></div><p>Loading Vault...</p>'; loading.style.display = 'none'; }
+            }
+        }
+
+        // ─── Delete from Firebase ─────────────────────
+        async function deleteMedia(index, docId, storagePath, event) {
+            event.stopPropagation();
+            const pwd = prompt("Admin Access Required: Enter password to delete media:");
+            if (pwd !== "1206") {
+                alert("Access Denied: Incorrect password!");
+                return;
+            }
+            if (!confirm('Permanently delete this from the Cloud Vault?')) return;
+            try {
+                await window.db.collection(COLLECTION).doc(docId).delete();
+                if (storagePath && storagePath !== 'undefined') {
+                    try { await window.storage.ref(storagePath).delete(); } catch(e) { }
+                }
+                galleryData.splice(index, 1);
+                renderGallery();
+            } catch(e) { alert('Delete failed: ' + e.message); }
+        }
+
+        // ─── Lightbox ────────────────────────────────
+        function openLightbox(index) {
+            currentIdx = index;
+            const lb   = document.getElementById('lightbox');
+            const img  = document.getElementById('lightbox-img');
+            const vid  = document.getElementById('lightbox-video');
+            const item = galleryData[index];
+            if (!item) return;
+
+            if (item.type === 'video') {
+                img.style.display = 'none';
+                img.src = '';
+                vid.style.display = 'block';
+                vid.src = item.src;
+                vid.play().catch(()=>{});
+            } else {
+                vid.pause(); vid.src = '';
+                vid.style.display = 'none';
+                img.style.display = 'block';
+                img.src = item.src;
+            }
+            lb.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const vid = document.getElementById('lightbox-video');
+            vid.pause(); vid.src = '';
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function slideLightbox(dir) {
+            currentIdx = (currentIdx + dir + galleryData.length) % galleryData.length;
+            openLightbox(currentIdx);
+        }
+
+        document.addEventListener('keydown', e => {
+            if (!document.getElementById('lightbox').classList.contains('active')) return;
+            if (e.key === 'Escape')      closeLightbox();
+            if (e.key === 'ArrowLeft')   slideLightbox(-1);
+            if (e.key === 'ArrowRight')  slideLightbox(1);
+        });
+
+        document.getElementById('lightbox').addEventListener('click', e => {
+            if (e.target.id === 'lightbox') closeLightbox();
+        });
+
+        // ─── Modal controls ──────────────────────────
+        function openModal() {
+            const pwd = prompt("Admin Access Required: Enter password to upload media:");
+            if (pwd !== "1206") {
+                alert("Access Denied: Incorrect password!");
+                return;
+            }
+            const m = document.getElementById('modal');
+            m.style.display = 'flex';
+            document.getElementById('fileInput').value = '';
+            document.getElementById('preview-img').style.display = 'none';
+        }
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+        function previewFile() {
+            const file = document.getElementById('fileInput').files[0];
+            if (!file || !file.type.startsWith('image/')) { document.getElementById('preview-img').style.display='none'; return; }
+            const reader = new FileReader();
+            reader.onload = e => {
+                const p = document.getElementById('preview-img');
+                p.src = e.target.result;
+                p.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // ─── Init ────────────────────────────────────
+        document.getElementById('vaultAddBtn').addEventListener('click', openModal);
+
+        window.addEventListener('load', () => {
+            waitForFirebase(() => {
+                loadGalleryData();
+            });
+            // Safety net: hide loader after 8s if stuck
+            setTimeout(() => {
+                const l = document.getElementById('loading');
+                if (l && l.style.display !== 'none') {
+                    l.style.display = 'none';
+                    renderGallery();
+                }
+            }, 4000);
+        });
+    </script>
+</body>
+</html>

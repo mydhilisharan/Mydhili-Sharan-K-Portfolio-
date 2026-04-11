@@ -1,0 +1,134 @@
+/* ========== EXPERIENCE ========== */
+.experience {
+    padding: 80px 8%;
+}
+
+.exp-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.exp-subtitle {
+    color: cyan;
+    letter-spacing: 2px;
+}
+
+.exp-header h2 {
+    font-size: 36px;
+}
+
+.exp-header span {
+    color: cyan;
+}
+
+/* TIMELINE LINE */
+.timeline {
+    position: relative;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    background: cyan;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* ITEM */
+.timeline-item {
+    padding: 20px 40px;
+    position: relative;
+    width: 50%;
+    box-sizing: border-box;
+}
+
+/* LEFT */
+.timeline-item.left {
+    left: 0;
+}
+
+/* RIGHT */
+.timeline-item.right {
+    left: 50%;
+}
+
+/* DOT */
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: cyan;
+    border-radius: 50%;
+    top: 30px;
+    right: -7px;
+}
+
+.timeline-item.right::after {
+    left: -7px;
+}
+
+/* CARD */
+.timeline-content {
+    background: rgba(255,255,255,0.05);
+    padding: 20px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.timeline-content h3 {
+    margin: 5px 0;
+}
+
+.timeline-content h4 {
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+.timeline-content .date {
+    color: cyan;
+    font-size: 13px;
+}
+
+.timeline-content p {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+/* TAGS */
+.tags {
+    margin-top: 10px;
+}
+
+.tags span {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px 5px 0 0;
+    border-radius: 20px;
+    background: rgba(0,255,255,0.1);
+    font-size: 12px;
+}
+
+/* Responsive Fix */
+@media (max-width: 768px) {
+    .timeline::after {
+        left: 20px;
+    }
+    .timeline-item {
+        width: 100%;
+        padding-left: 50px;
+        padding-right: 20px;
+    }
+    .timeline-item.right {
+        left: 0;
+    }
+    .timeline-item::after {
+        left: 13px;
+    }
+}
+

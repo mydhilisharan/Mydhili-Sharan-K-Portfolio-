@@ -1,0 +1,36 @@
+﻿        <section id="experience" class="section-container reveal-section">
+            <div class="section-title">
+                <span class="title-main">Experience</span>
+                <span class="title-sub">Work History</span>
+            </div>
+            <div class="timeline">
+                <div class="glass-card timeline-card">
+                    <div class="tl-dot"></div>
+                    <div class="timeline-header">
+                        <div>
+                            <h3>Security Operations Trainee</h3>
+                            <span class="company-tag">Infotact Solutions &mdash; 2026</span>
+                        </div>
+                    </div>
+                    <ul>
+                        <li>Built DevSecOps CI/CD pipeline using Jenkins, Docker, and Git.</li>
+                        <li>Implemented SAST, DAST, and automated vulnerability scanning.</li>
+                        <li>Improved application security posture through automated testing workflows.</li>
+                    </ul>
+                </div>
+                <div class="glass-card timeline-card">
+                    <div class="tl-dot"></div>
+                    <div class="timeline-header">
+                        <div>
+                            <h3>Cloud Security Intern</h3>
+                            <span class="company-tag">ISRDF</span>
+                        </div>
+                    </div>
+                    <ul>
+                        <li>Monitored infrastructure using AWS GuardDuty and CloudWatch.</li>
+                        <li>Implemented IAM roles, permission boundaries and security policies.</li>
+                        <li>Applied data encryption using AWS KMS for compliance requirements.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>

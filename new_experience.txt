@@ -1,0 +1,46 @@
+        <section id="experience" class="experience reveal-section">
+            <div class="exp-header">
+                <p class="exp-subtitle">Experience</p>
+                <h2>Experience that <span>speaks volumes.</span></h2>
+            </div>
+            
+            <div class="timeline">
+                <!-- INTERNSHIP (NEW - FROM YOUR IMAGE) -->
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <span class="date">Feb 2026 - May 2026</span>
+                        <h3>Cyber Security Intern</h3>
+                        <h4>White and Box - Tech Products & Services (Bangalore)</h4>
+                        <p>
+                            Completed a 3-month internship focusing on cybersecurity operations,
+                            threat analysis, and cloud security practices. Worked under senior
+                            professionals to gain hands-on experience in real-world security systems,
+                            incident response, and infrastructure protection.
+                        </p>
+                        <div class="tags">
+                            <span>SOC</span>
+                            <span>Threat Analysis</span>
+                            <span>Cloud Security</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ADD MORE EXPERIENCE BELOW (FUTURE READY) -->
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <span class="date">Future Role</span>
+                        <h3>Cloud Security Engineer</h3>
+                        <h4>Target Company</h4>
+                        <p>
+                            Planning to work on advanced cloud security solutions,
+                            DevSecOps pipelines, and enterprise infrastructure security.
+                        </p>
+                        <div class="tags">
+                            <span>AWS</span>
+                            <span>DevSecOps</span>
+                            <span>Security Engineering</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>

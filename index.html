@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mydhili Sharan K - Cybersecurity, Cloud Security & SOC Analyst Portfolio">
+    <title>Mydhili Sharan K | Cybersecurity Portfolio</title><script>window.onerror = function(msg, url, line, col, error) { alert(\'JS ERROR: \' + msg + \' at line \' + line); };</script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        if (localStorage.getItem('theme') === 'light') document.documentElement.setAttribute('data-theme', 'light');
+    </script>
+</head>
+<body>
+
+    <div id="cursor-glow" class="cursor-glow"></div>
+    <div id="light-mode-bg" class="light-mode-bg"></div>
+
+    <canvas id="particles-bg"></canvas>
+
+    <!-- COMPONENT: NAVBAR -->
+    <!-- Navigation -->
+    <nav class="glass-nav" id="navbar">
+        <div class="nav-content">
+            <div class="nav-brand-area">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
+                    <div class="toggle-track">
+                        <div class="toggle-thumb">
+                            <i class="fas fa-sun light-icon"></i>
+                            <i class="fas fa-moon dark-icon"></i>
+                        </div>
+                    </div>
+                </button>
+                <button id="saveBtn" onclick="savePortfolio()" style="display:none;"><i class="fa-solid fa-cloud-arrow-up"></i> Save Updates</button>
+                <button id="exportBtn" onclick="exportForGithub()" style="display:none; background: #6eff00; color: #000;"><i class="fa-brands fa-github"></i> Export for GitHub</button>
+                <div class="logo">MSK</div>
+                <button class="nav-edit-btn" onclick="verifyAdmin()" id="navEditBtn"><i class="fa-solid fa-lock"></i> Edit Portfolio</button>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Right Sidebar Container -->
+    <div class="right-sidebar">
+        <!-- Vertical Right Side Navigation -->
+        <nav class="side-nav" id="side-nav">
+            <a href="#hero"          class="side-nav-item active" data-section="hero"          aria-label="Home">
+                <span class="side-nav-icon"><i class="fas fa-house"></i></span>
+                <span class="side-nav-label">Home</span>
+            </a>
+            <a href="#about"         class="side-nav-item" data-section="about"         aria-label="About">
+                <span class="side-nav-icon"><i class="fas fa-user"></i></span>
+                <span class="side-nav-label">About</span>
+            </a>
+            <a href="#skills"        class="side-nav-item" data-section="skills"        aria-label="Skills">
+                <span class="side-nav-icon"><i class="fas fa-bolt"></i></span>
+                <span class="side-nav-label">Skills</span>
+            </a>
+            <a href="#experience"   class="side-nav-item" data-section="experience"   aria-label="Experience">
+                <span class="side-nav-icon"><i class="fas fa-briefcase"></i></span>
+                <span class="side-nav-label">Experience</span>
+            </a>
+            <a href="#projects"     class="side-nav-item" data-section="projects"     aria-label="Projects">
+                <span class="side-nav-icon"><i class="fas fa-code"></i></span>
+                <span class="side-nav-label">Projects</span>
+            </a>
+            <a href="#certifications" class="side-nav-item" data-section="certifications" aria-label="Certifications">
+                <span class="side-nav-icon"><i class="fas fa-award"></i></span>
+                <span class="side-nav-label">Certs</span>
+            </a>
+            <a href="#contact"      class="side-nav-item" data-section="contact"      aria-label="Contact">
+                <span class="side-nav-icon"><i class="fas fa-envelope"></i></span>
+                <span class="side-nav-label">Contact</span>
+            </a>
+        </nav>
+
+        <!-- Floating AI Buttons -->
+        <div class="ai-tools">
+            <button class="ai-fab" id="voice-btn" aria-label="Voice Assistant" onclick="toggleVoice()">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button class="ai-fab" id="chat-fab" aria-label="AI Chat" onclick="toggleChat()">
+                <i class="fas fa-comment-dots"></i>
+            </button>
+        </div>
+    </div>
+
+    <main>
+        <!-- COMPONENT: HERO -->
+        <!-- Hero -->
+        <section id="hero" class="hero reveal-section">
+            <!-- Layer 3: Radial glow behind image -->
+            <div class="hero-glow-bg parallax-element" data-speed="0.04"></div>
+            <!-- Layer 4: Ambient particles -->
+            <canvas id="hero-particles" class="hero-particles-canvas"></canvas>
+            <div class="hero-glass-card fade-in" id="hero-glass-card">
+                <!-- Dynamic light following cursor -->
+                <div class="hero-cursor-light" id="hero-cursor-light"></div>
+                <!-- Glass reflection sheen -->
+                <div class="glass-reflection"></div>
+                
+                <div class="hero-container">
+                    <!-- LEFT: Profile -->
+                    <div class="hero-left parallax-element" data-speed="-0.04">
+                        <div class="profile-img-wrapper">
+                            <img src="profile img.jpeg" alt="Mydhili Sharan K" class="profile-img" onerror="this.src='https://ui-avatars.com/api/?name=Mydhili+Sharan&background=0a0e23&color=38bdf8&size=150'">
+                            <!-- Premium light reflection highlight -->
+                            <div class="profile-highlight"></div>
+                        </div>
+                    </div>
+                    <!-- RIGHT: Content -->
+                    <div class="hero-right">
+                        <p class="hero-intro editable">Hi, I'm</p>
+                        <h1 class="main-title editable">Mydhili Sharan K</h1>
+                        <h3 class="typing-role">
+                            <span id="typing-text"></span>
+                            <span class="cursor">|</span>
+                        </h3>
+                        <h2 class="modern-role"><span id="typing-role"></span><span class="cursor">|</span></h2>
+                        <div class="role-tags editable">AWS Security <span class="tag-dot">&bull;</span> SOC Analyst <span class="tag-dot">&bull;</span> Cloud Computing</div>
+                        <p class="hero-desc editable">Protecting systems, analyzing threats, and securing cloud infrastructure with precision and expertise.</p>
+                        <div class="hero-actions">
+                            <!-- TOP ROW -->
+                            <div class="hero-buttons">
+                                <a href="#projects" class="btn primary">Explore Work &rarr;</a>
+                                <a href="Resume.pdf" download class="btn secondary">Download Resume &darr;</a>
+                            </div>
+                            <!-- BOTTOM ROW -->
+                            <div class="contact-row">
+                                <a href="#contact" class="btn outline">Get In Touch</a>
+                                <div class="hero-socials">
+                                    <a href="https://github.com/mydhilisharan" target="_blank">
+                                        <i class="fa-brands fa-github"></i>
+                                    </a>
+                                    <a href="https://www.linkedin.com/in/mydhili-sharan-k-68bb152bb" target="_blank">
+                                        <i class="fa-brands fa-linkedin"></i>
+                                    </a>
+                                    <a href="https://www.instagram.com/sharan_____1206" target="_blank">
+                                        <i class="fa-brands fa-instagram"></i>
+                                    </a>
+                                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=mydhilisharan4766@gmail.com" target="_blank">
+                                        <i class="fa-solid fa-envelope"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section id="about" class="section-container reveal-section">
+            <div class="glass-card full-card">
+                <div class="section-title">
+                    <span class="title-main">About</span>
+                    <span class="title-sub">Who I Am</span>
+                </div>
+                <p class="about-text editable"><span class="highlight">Cybersecurity</span> and <span class="highlight">Cloud Technology</span> graduate with strong expertise in <span class="highlight">AWS Cloud</span> Security, <span class="highlight">SOC Operations</span>, <span class="highlight">Threat Detection</span>, <span class="highlight">Incident Response</span>, and <span class="highlight">DevSecOps</span>. I am passionate about protecting digital systems, analyzing complex threats, and building <span class="highlight">secure infrastructure</span> solutions for modern enterprises.</p>
+            </div>
+        </section>
+
+        <!-- Skills -->
+        <section id="skills" class="section-container reveal-section">
+            <div class="section-title">
+                <span class="title-main">Skills</span>
+                <span class="title-sub">Expertise</span>
+            </div>
+            <div class="skills-grid">
+                <div class="glass-card skill-card">
+                    <div class="icon-wrapper"><i class="fas fa-cloud"></i></div>
+                    <h3 class="editable">Cloud Security</h3>
+                    <p class="editable">AWS EC2, VPC, IAM, S3, CloudTrail, CloudWatch, GuardDuty, KMS Encryption</p>
+                </div>
+                <div class="glass-card skill-card">
+                    <div class="icon-wrapper"><i class="fas fa-network-wired"></i></div>
+                    <h3 class="editable">Networking</h3>
+                    <p class="editable">TCP/IP, DNS, HTTP/HTTPS, IPv4, IPv6, Subnetting & Network Architecture</p>
+                </div>
+                <div class="glass-card skill-card">
+                    <div class="icon-wrapper"><i class="fas fa-shield-alt"></i></div>
+                    <h3 class="editable">SOC Operations</h3>
+                    <p class="editable">SIEM Monitoring, Log Analysis, Threat Detection & Incident Response</p>
+                </div>
+                <div class="glass-card skill-card">
+                    <div class="icon-wrapper"><i class="fas fa-lock"></i></div>
+                    <h3 class="editable">Cybersecurity</h3>
+                    <p class="editable">CIA Triad, Risk Assessment, Vulnerability Management & Compliance</p>
+                </div>
+                <div class="glass-card skill-card">
+                    <div class="icon-wrapper"><i class="fas fa-bug"></i></div>
+                    <h3 class="editable">Penetration Testing</h3>
+                    <p class="editable">Nmap, Burp Suite, Metasploit & SQLMap for security assessments</p>
+                </div>
+                <div class="glass-card skill-card">
+                    <div class="icon-wrapper"><i class="fas fa-search"></i></div>
+                    <h3 class="editable">Digital Forensics</h3>
+                    <p class="editable">Log Investigation, Evidence Collection & Incident Analysis</p>
+                </div>
+            </div>
+            
+            <button id="addSkillBtn" class="add-btn" style="display:none;" onclick="openSkillModal()">
+                <i class="fas fa-plus"></i> Add Skill
+            </button>
+        </section>
+
+        <!-- COMPONENT: ANALYTICS DASHBOARD -->
+        <section id="analytics" class="section-container reveal-section">
+            <div class="section-title">
+                <span class="title-main">Analytics</span>
+                <span class="title-sub">Security Insights Dashboard</span>
+            </div>
+            <div class="analytics-grid">
+                <div class="glass-card stat-card">
+                    <h3>Threat Detection Rate</h3>
+                    <div class="stat-value">92<span class="pct">%</span></div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar fill-92"></div>
+                    </div>
+                </div>
+                <div class="glass-card stat-card">
+                    <h3>Avg Incident Response</h3>
+                    <div class="stat-value">12<span class="pct">mins</span></div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar fill-fast"></div>
+                    </div>
+                </div>
+                <div class="glass-card stat-card">
+                    <h3>Cloud Security Coverage</h3>
+                    <div class="stat-value">100<span class="pct">%</span></div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar fill-100"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="glass-card chart-card">
+                <h3>30-Day Threat Deflection (Simulated)</h3>
+                <canvas id="security-chart"></canvas>
+            </div>
+        </section>
+        <!-- SOC MONITORING -->
+        <section id="soc" class="section-container reveal-section">
+            <div class="section-title">
+                <span class="title-main">SOC Monitoring</span>
+                <span class="title-sub">Live Threat Alerts</span>
+            </div>
+            <div class="dash-grid">
+                <div class="glass-card dash-alert-card">
+                    <div class="alert-row">
+                        <span class="alert-dot dot-high"></span>
+                        <div class="alert-info"><strong>Brute Force Attempt Detected</strong><span>SSH Ã¢â‚¬â€ 192.168.1.44</span></div>
+                        <span class="sev-badge high">High</span>
+                    </div>
+                    <div class="alert-row">
+                        <span class="alert-dot dot-med"></span>
+                        <div class="alert-info"><strong>Suspicious Login Ã¢â‚¬â€ Off-hours</strong><span>IAM User: analyst_01</span></div>
+                        <span class="sev-badge med">Medium</span>
+                    </div>
+                    <div class="alert-row">
+                        <span class="alert-dot dot-low"></span>
+                        <div class="alert-info"><strong>Port Scan Detected</strong><span>Source: 10.0.0.55</span></div>
+                        <span class="sev-badge low">Low</span>
+                    </div>
+                    <div class="alert-row">
+                        <span class="alert-dot dot-high"></span>
+                        <div class="alert-info"><strong>Malware Signature Match</strong><span>Endpoint: WS-007</span></div>
+                        <span class="sev-badge high">High</span>
+                    </div>
+                    <div class="alert-row">
+                        <span class="alert-dot dot-med"></span>
+                        <div class="alert-info"><strong>Unusual Outbound Traffic</strong><span>Port 4444 Ã¢â‚¬â€ 45.32.100.11</span></div>
+                        <span class="sev-badge med">Medium</span>
+                    </div>
+                </div>
+                <div class="dash-stat-col">
+                    <div class="glass-card mini-stat"><i class="fas fa-exclamation-triangle" style="color:#f87171;"></i><span class="stat-num">7</span><span>Active Alerts</span></div>
+                    <div class="glass-card mini-stat"><i class="fas fa-check-circle" style="color:#34d399;"></i><span class="stat-num">43</span><span>Resolved Today</span></div>
+                    <div class="glass-card mini-stat"><i class="fas fa-clock" style="color:#60a5fa;"></i><span class="stat-num">12m</span><span>Avg Response</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CLOUD SECURITY PANEL -->
+        <section id="cloud-panel" class="section-container reveal-section">
+            <div class="section-title">
+                <span class="title-main">Cloud Security</span>
+                <span class="title-sub">AWS Infrastructure Status</span>
+            </div>
+            <div class="cloud-grid">
+                <div class="glass-card cloud-status-card"><div class="cloud-icon"><i class="fab fa-aws"></i></div><div class="cloud-info"><h4>EC2 Instances</h4><p>4 running Ã¢â‚¬â€ All compliant</p></div><span class="status-pill ok">Secure</span></div>
+                <div class="glass-card cloud-status-card"><div class="cloud-icon"><i class="fas fa-user-shield"></i></div><div class="cloud-info"><h4>IAM Security Score</h4><p>MFA enforced Ã¢â‚¬â€ least privilege</p></div><span class="status-pill ok">98/100</span></div>
+                <div class="glass-card cloud-status-card"><div class="cloud-icon"><i class="fas fa-shield-alt"></i></div><div class="cloud-info"><h4>AWS WAF &amp; Firewall</h4><p>All rules active Ã¢â‚¬â€ 0 bypass events</p></div><span class="status-pill ok">Active</span></div>
+                <div class="glass-card cloud-status-card"><div class="cloud-icon"><i class="fas fa-database"></i></div><div class="cloud-info"><h4>S3 Bucket Policy</h4><p>Public access blocked Ã¢â‚¬â€ KMS encrypted</p></div><span class="status-pill ok">Locked</span></div>
+                <div class="glass-card cloud-status-card"><div class="cloud-icon"><i class="fas fa-search"></i></div><div class="cloud-info"><h4>GuardDuty</h4><p>Active Ã¢â‚¬â€ no critical findings</p></div><span class="status-pill ok">OK</span></div>
+                <div class="glass-card cloud-status-card"><div class="cloud-icon"><i class="fas fa-file-alt"></i></div><div class="cloud-info"><h4>CloudTrail Logging</h4><p>All API calls captured</p></div><span class="status-pill ok">Enabled</span></div>
+            </div>
+        </section>
+
+        <!-- THREAT INTELLIGENCE -->
+        <section id="threat-intel" class="section-container reveal-section">
+            <div class="section-title">
+                <span class="title-main">Threat Intelligence</span>
+                <span class="title-sub">Attack Feed &amp; Risk Indicators</span>
+            </div>
+            <div class="threat-grid">
+                <div class="glass-card threat-feed-card">
+                    <h4 class="feed-label">Live Threat Feed</h4>
+                    <div class="threat-row"><span class="threat-type phish"><i class="fas fa-fish"></i> Phishing</span><span class="threat-desc">Credential harvesting via fake login page</span><span class="risk-badge risk-high">Critical</span></div>
+                    <div class="threat-row"><span class="threat-type malware"><i class="fas fa-bug"></i> Malware</span><span class="threat-desc">Ransomware variant targeting Windows 10</span><span class="risk-badge risk-high">High</span></div>
+                    <div class="threat-row"><span class="threat-type ddos"><i class="fas fa-network-wired"></i> DDoS</span><span class="threat-desc">UDP flood Ã¢â‚¬â€ 120Gbps burst detected</span><span class="risk-badge risk-med">Medium</span></div>
+                    <div class="threat-row"><span class="threat-type phish"><i class="fas fa-envelope"></i> Spear Phishing</span><span class="threat-desc">Targeted at C-suite email accounts</span><span class="risk-badge risk-high">High</span></div>
+                    <div class="threat-row"><span class="threat-type malware"><i class="fas fa-code"></i> SQL Injection</span><span class="threat-desc">Automated scanning on login endpoints</span><span class="risk-badge risk-med">Medium</span></div>
+                </div>
+                <div class="glass-card threat-summary">
+                    <h4>Risk Distribution</h4>
+                    <div class="risk-bar-row"><span>Critical</span><div class="risk-bar"><div class="rb-fill rb-crit" style="width:35%"></div></div><span>35%</span></div>
+                    <div class="risk-bar-row"><span>High</span><div class="risk-bar"><div class="rb-fill rb-high" style="width:50%"></div></div><span>50%</span></div>
+                    <div class="risk-bar-row"><span>Medium</span><div class="risk-bar"><div class="rb-fill rb-med" style="width:12%"></div></div><span>12%</span></div>
+                    <div class="risk-bar-row"><span>Low</span><div class="risk-bar"><div class="rb-fill rb-low" style="width:3%"></div></div><span>3%</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMPONENT: EXPERIENCE -->
+        <!-- Experience -->
+        <section id="experience" class="experience reveal-section">
+            <div class="exp-header">
+                <p class="exp-subtitle">Experience</p>
+                <h2>Experience that <span>defines my journey.</span></h2>
+            </div>
+            
+            <div class="timeline">
+                <!-- 1. CYBER SECURITY INTERN -->
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <span class="date">Feb 2026 &ndash; May 2026</span>
+                        <h3 class="editable">Cyber Security Intern</h3>
+                        <h4 class="editable">White and Box &ndash; Tech Products &amp; Services</h4>
+                        <p class="editable">
+                            Worked on real-time cybersecurity operations including threat detection,
+                            incident response, and monitoring systems. Assisted in identifying
+                            vulnerabilities and strengthening infrastructure security.
+                        </p>
+                        <div class="tags">
+                            <span>SOC</span>
+                            <span>Threat Analysis</span>
+                            <span>Incident Response</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. SECURITY OPERATIONS TRAINEE -->
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <span class="date">2025 &ndash; 2026</span>
+                        <h3 class="editable">Security Operations Trainee</h3>
+                        <h4 class="editable">Infotact Solutions</h4>
+                        <p class="editable">
+                            Gained hands-on experience in SOC operations, SIEM tools, and log
+                            monitoring. Analyzed alerts, detected suspicious activities, and
+                            responded to simulated cyber incidents.
+                        </p>
+                        <div class="tags">
+                            <span>SIEM</span>
+                            <span>Log Analysis</span>
+                            <span>Threat Monitoring</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. CLOUD SECURITY INTERN -->
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <span class="date">2025</span>
+                        <h3 class="editable">Cloud Security Intern</h3>
+                        <h4 class="editable">Aerovant Technology</h4>
+                        <p class="editable">
+                            Worked with AWS cloud services including IAM, VPC, S3, CloudTrail,
+                            GuardDuty, and CloudWatch. Focused on securing cloud infrastructure
+                            and implementing best practices.
+                        </p>
+                        <div class="tags">
+                            <span>AWS</span>
+                            <span>IAM</span>
+                            <span>Cloud Security</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. PROJECT EXPERIENCE -->
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <span class="date">2024 &ndash; 2026</span>
+                        <h3 class="editable">Cybersecurity Projects</h3>
+                        <h4 class="editable">Personal &amp; Academic Work</h4>
+                        <p class="editable">
+                            Developed cybersecurity tools such as port scanners, duplicate file
+                            analyzers, and forensic frameworks using Python. Focused on automation
+                            and real-world security solutions.
+                        </p>
+                        <div class="tags">
+                            <span>Python</span>
+                            <span>Automation</span>
+                            <span>Security Tools</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. FUTURE ROLE -->
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <span class="date">Future</span>
+                        <h3 class="editable">Cloud Security Engineer</h3>
+                        <h4 class="editable">Career Goal</h4>
+                        <p class="editable">
+                            Aspiring to design secure cloud architectures, implement DevSecOps
+                            pipelines, and protect enterprise systems from advanced cyber threats.
+                        </p>
+                        <div class="tags">
+                            <span>DevSecOps</span>
+                            <span>Cloud Architecture</span>
+                            <span>Security Engineering</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="addExpBtn" class="add-btn" style="display:none;" onclick="openExpModal()">
+                <i class="fas fa-plus"></i> Add Experience
+            </button>
+        </section>
+
+                <!-- Projects -->
+        <section id="projects" class="projects reveal-section">
+            <div class="project-header">
+                <p class="project-subtitle">Projects</p>
+                <h2>Things I've <span>built &amp; explored.</span></h2>
+            </div>
+            <div class="project-container">
+                <!-- MAIN PROJECT (FULL WIDTH) -->
+                <div class="project-card main-project">
+                    <div class="project-icon"><i class="fas fa-link"></i></div>
+                    <h3 class="editable">Blockchain-Based Forensic Framework</h3>
+                    <p class="project-desc">
+                        <strong>Blockchain-Integrated Lightweight Cryptographic Framework for Detecting File Timestamp Manipulation in Forensic Analysis</strong>
+                    </p>
+                    <p class="editable">
+                        Designed a secure forensic system using cryptographic hashing and blockchain storage
+                        to detect unauthorized timestamp modifications and ensure data integrity.
+                        The framework provides tamper-proof audit trails, ideal for legal-grade digital evidence handling.
+                    </p>
+                    <div class="tags">
+                        <span>Blockchain</span>
+                        <span>Cryptography</span>
+                        <span>Digital Forensics</span>
+                        <span>Python</span>
+                        <span>Data Integrity</span>
+                    </div>
+                </div>
+
+                <!-- PROJECT 2 -->
+                <div class="project-card">
+                    <div class="project-icon"><i class="fas fa-network-wired"></i></div>
+                    <h3 class="editable">Fast Port Scanner</h3>
+                    <p class="editable">
+                        Developed a high-performance asynchronous port scanner using Python
+                        for fast and efficient network scanning with clean, structured output.
+                        Useful for security audits and reconnaissance.
+                    </p>
+                    <div class="tags">
+                        <span>Python</span>
+                        <span>Networking</span>
+                        <span>Security</span>
+                    </div>
+                </div>
+
+                <!-- PROJECT 3 -->
+                <div class="project-card">
+                    <div class="project-icon"><i class="fas fa-copy"></i></div>
+                    <h3 class="editable">Duplicate File Analyzer</h3>
+                    <p class="editable">
+                        Built a system using hashing techniques to detect and manage duplicate files
+                        across storage systems, improving efficiency and storage optimization.
+                        Supports MD5/SHA-256 comparison across directories.
+                    </p>
+                    <div class="tags">
+                        <span>Python</span>
+                        <span>Automation</span>
+                        <span>Hashing</span>
+                    </div>
+                </div>
+            </div>
+
+            <button id="addProjectBtn" class="add-btn" style="display:none;" onclick="openProjectModal()">
+                <i class="fas fa-plus"></i> Add Project
+            </button>
+        </section>
+
+        <!-- Certifications -->
+<section id="certifications" class="cert-section certificates-section">
+  <h2 class="cert-title">Certificates</h2>
+  <div class="cert-container"><div id="certGrid" class="cert-grid"></div></div>
+</section>
+
+        <!-- Contact -->
+        <!-- Contact -->
+        <section id="contact" class="section-container reveal-section">
+            <div class="contact-section-inner">
+                <!-- LEFT SIDE (FORM) -->
+                <div class="contact-box glass-card">
+                    <h4>GET IN TOUCH</h4>
+                    <h1>Contact.</h1>
+
+                    <form id="contact-form" onsubmit="sendContactEmail(event)">
+                        <input type="text" name="name" id="contact-name" placeholder="Your Name" class="contact-input" required>
+                        <input type="email" name="email" id="contact-email" placeholder="Your Email" class="contact-input" required>
+                        <textarea name="message" id="contact-msg" placeholder="Your Message" class="contact-textarea" rows="4" required></textarea>
+
+                        <!-- SOCIAL MEDIA -->
+                        <div class="social-icons">
+                            <a href="https://www.linkedin.com/in/mydhili-sharan-k-68bb152bb" target="_blank"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://github.com/mydhilisharan" target="_blank"><i class="fab fa-github"></i></a>
+                            <a href="https://www.instagram.com/sharan_____1206" target="_blank"><i class="fab fa-instagram"></i></a>
+                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=mydhilisharan4766@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
+                        </div>
+
+                        <button type="submit" class="contact-submit-btn">Send</button>
+                    </form>
+                </div>
+
+                <!-- RIGHT SIDE (ROTATING IMAGE) -->
+                <div class="rotating-image-container">
+                    <img src="glass_sphere.jpg" alt="Always Believe in yourself" class="rotating-sphere">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p class="editable">&copy; 2026 Mydhili Sharan K &mdash; All rights reserved.</p>
+    </footer>
+
+    <!-- COMPONENT: CHATBOT -->
+    <!-- AI Chat Window -->
+    <div id="chat-window" class="chat-window glass-card">
+        <div class="chat-header">
+            <div class="chat-title"><i class="fas fa-robot"></i> AI Assistant</div>
+            <div style="display: flex; gap: 10px;">
+                <button class="chat-mute" id="jarvis-mute-btn" onclick="toggleJarvisVoice()" aria-label="Toggle Voice" title="Mute Jarvis" style="background: none; border: none; color: #fff; cursor: pointer; font-size: 1.1rem; opacity: 0.7; transition: 0.3s;"><i class="fas fa-volume-up"></i></button>
+                <button class="chat-close" onclick="toggleChat()"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div id="chat-body" class="chat-body">
+            <div class="cgpt-bot-row">
+                <div class="cgpt-bot-avatar"><i class="fas fa-robot"></i></div>
+                <div class="cgpt-bot-msg">I am JARVIS, Mydhili's AI assistant. Ask me about her skills, projects, or experience.</div>
+            </div>
+        </div>
+        <div class="chat-quick-replies">
+            <button onclick="sendQuickReply('Skills')">Skills</button>
+            <button onclick="sendQuickReply('Projects')">Projects</button>
+            <button onclick="sendQuickReply('Experience')">Experience</button>
+            <button onclick="sendQuickReply('Contact')">Contact</button>
+        </div>
+        <div class="chat-input-row">
+            <input type="text" id="chat-input" placeholder="Ask something..." autocomplete="off">
+            <button onclick="handleManualSend()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- Voice Toast -->
+    <div id="voice-toast" class="voice-toast hidden">
+        <div class="voice-bars">
+            <div class="vbar"></div><div class="vbar"></div><div class="vbar"></div><div class="vbar"></div>
+        </div>
+        <span id="voice-text">Listening...</span>
+    </div>
+
+    <!-- MIGRATION GUIDE: REACT + THREE.JS
+    ======================================
+    This portfolio is currently built on a hyper-optimized Vanilla HTML/CSS/JS stack for maximum 
+    performance and zero dependencies. To migrate this to a Future-Ready React app:
+
+    1. COMPONENT STRATEGY: 
+       - Break index.html into `<Navbar />`, `<Hero />`, `<Skills />`, `<Analytics />`, and `<Chatbot />`.
+       - Move all vanilla JavaScript intersection observers into a standard custom hook: e.g. `useScrollReveal()`.
+       - Convert the `script.js?v=1775882445951` Chatbot logic into a `useChatStore()` Zustand store or Context provider.
+
+    2. THREE.JS MIGRATION: 
+       - Discard `canvas#particles-bg` and replace it with a full-screen `<Canvas>` from `@react-three/fiber`.
+       - Inside the canvas, use `@react-three/drei` components like `<Stars />` or build a custom `<ParticleSystem />`.
+       - To retain the glowing Earth, import the earth texture onto a `<sphereGeometry>` and apply a custom `<shaderMaterial>` to simulate atmospheric scattering instead of using CSS `filter: blur()`, yielding a true 3D interactive backdrop.
+    ====================================== -->
+
+    <!-- Save Button (Admin) -->
+    
+
+    <!-- GALLERY BUTTON (CENTER LEFT) -->
+    <button class="ai-btn center-ai" onclick="openAIGalleryPage()" title="Open Gallery Vault">
+      GALLERY
+    </button>
+
+    <!-- SCROLL BUTTON (BOTTOM LEFT) -->
+    <button class="scroll-top" onclick="scrollToTop()">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 4l-7 7h4v7h6v-7h4z"/>
+      </svg>
+    </button>
+
+    <!-- FIREBASE COMPAT SDK (works on file:// and https://) -->
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-storage-compat.js"></script>
+    <script src="firebase-config.js?v=1775882445951"></script>
+
+    <!-- CORE SCRIPTS -->
+    <script src="data.js"></script>
+    <script src="script.js?v=1775882445951"></script>
+
+    
+    </div>
+
+
+    </div>
+
+
+<!-- FLOATING ADD BUTTON -->
+<button id="addCertBtn" onclick="openCertModal()" class="floating-add" style="display: none;"> <i class="fas fa-plus"></i> </button>
+
+<!-- EXPERIENCE MODAL (Add) -->
+<div id="expModal" class="modal">
+  <div class="modal-content">
+    <h2>Add Experience</h2>
+    <input type="text" id="expDate" placeholder="Date/Duration (e.g. 2026 - Present)">
+    <input type="text" id="expRole" placeholder="Role/Title (e.g. SOC Analyst)">
+    <input type="text" id="expCompany" placeholder="Company/Organization">
+    <textarea id="expDesc" placeholder="Description" style="width:100%; padding:10px; background:rgba(255,255,255,0.05); color:#fff; border:1px solid rgba(255,255,255,0.1); border-radius:6px; resize:vertical; min-height:60px;"></textarea>
+    <input type="text" id="expTags" placeholder="Tags (comma separated)">
+    <div class="modal-actions">
+      <button onclick="saveExp()" class="btn primary">Save</button>
+      <button onclick="closeExpModal()" class="btn secondary">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- SKILL MODAL (Add) -->
+<div id="skillModal" class="modal">
+  <div class="modal-content">
+    <h2>Add Skill</h2>
+    <input type="text" id="skillTitle" placeholder="Skill Title (e.g. Threat Intelligence)">
+    <input type="text" id="skillIcon" placeholder="FontAwesome Icon (e.g. fa-shield-alt)">
+    <textarea id="skillDesc" placeholder="Skill Description" style="width:100%; padding:10px; background:rgba(255,255,255,0.05); color:#fff; border:1px solid rgba(255,255,255,0.1); border-radius:6px; resize:vertical; min-height:60px;"></textarea>
+    <div class="modal-actions">
+      <button onclick="saveSkill()" class="btn primary">Save</button>
+      <button onclick="closeSkillModal()" class="btn secondary">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECT MODAL (Add) -->
+<div id="projectModal" class="modal">
+  <div class="modal-content">
+    <h2>Add Project</h2>
+    <input type="text" id="projectTitle" placeholder="Project Title">
+    <input type="text" id="projectIcon" placeholder="FontAwesome Icon (e.g. fa-laptop-code)">
+    <textarea id="projectDesc" placeholder="Project Description" style="width:100%; padding:10px; background:rgba(255,255,255,0.05); color:#fff; border:1px solid rgba(255,255,255,0.1); border-radius:6px; resize:vertical; min-height:60px;"></textarea>
+    <input type="text" id="projectTags" placeholder="Tags (comma separated e.g. Python, Networking)">
+    <div class="modal-actions">
+      <button onclick="saveProject()" class="btn primary">Save</button>
+      <button onclick="closeProjectModal()" class="btn secondary">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- CERT MODAL (Add/Edit) -->
+<div id="certModal" class="modal">
+  <div class="modal-content">
+    <h2>Add / Edit Certificate</h2>
+    <input type="text" id="certTitle" placeholder="Certificate Title">
+    <input type="text" id="certOrg" placeholder="Organization">
+    <textarea id="certDesc" placeholder="Certificate Description" style="width:100%; padding:10px; background:rgba(255,255,255,0.05); color:#fff; border:1px solid rgba(255,255,255,0.1); border-radius:6px; resize:vertical; min-height:60px;"></textarea>
+    <input type="file" id="certImage" accept="image/*">
+    <div class="modal-actions">
+      <button onclick="saveCertificate()" class="btn primary">Save</button>
+      <button onclick="closeCertModal()" class="btn secondary">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ZOOM LIGHTBOX MODAL -->
+<div id="zoomModal" class="cert-zoom-modal">
+  <span class="zoom-close-btn" onclick="closeZoom()">&times;</span>
+  <img id="zoomModalImg" src="" alt="Certificate">
+</div>
+
+<!-- Contact Form Handler — Resend API (direct to Gmail) -->
+<script>
+  async function sendContactEmail(e) {
+    e.preventDefault();
+
+    const name    = document.getElementById('contact-name').value.trim();
+    const email   = document.getElementById('contact-email').value.trim();
+    const message = document.getElementById('contact-msg').value.trim();
+    const btn     = document.querySelector('.contact-submit-btn');
+
+    if (!name || !email || !message) {
+      alert('Please fill in all fields.');
+      return;
+    }
+
+    btn.disabled    = true;
+    btn.textContent = 'Sending...';
+    btn.style.opacity = '0.7';
+
+    try {
+      // Send via Vercel serverless proxy (handles CORS + Resend API)
+      const res = await fetch('https://portfolio-contact-api-nu.vercel.app/api/send-contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message })
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        // Also save to Firestore as backup
+        if (window.db) {
+          window.db.collection('contact_messages').add({
+            name, email, message,
+            timestamp: Date.now(),
+            date: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+            delivered: true
+          }).catch(() => {});
+        }
+
+        // ✅ Success
+        btn.textContent  = '✅ Message Sent!';
+        btn.style.background = 'linear-gradient(135deg, #00ff88, #00c853)';
+        btn.style.opacity    = '1';
+        btn.style.transform  = 'scale(1.04)';
+        document.getElementById('contact-form').reset();
+
+        setTimeout(() => {
+          btn.textContent      = 'Send';
+          btn.style.background = '';
+          btn.style.transform  = '';
+          btn.disabled         = false;
+        }, 4000);
+
+      } else {
+        throw new Error(data.message || 'Send failed');
+      }
+
+    } catch (err) {
+      console.error('Contact send failed:', err);
+      btn.textContent      = '⚠️ Try Again';
+      btn.style.background = 'linear-gradient(135deg, #ff6b6b, #ee5a24)';
+      btn.style.opacity    = '1';
+      btn.disabled         = false;
+      setTimeout(() => {
+        btn.textContent      = 'Send';
+        btn.style.background = '';
+      }, 3000);
+    }
+  }
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

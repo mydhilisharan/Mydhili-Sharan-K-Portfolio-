@@ -1,0 +1,102 @@
+        <section id="experience" class="experience reveal-section">
+            <div class="exp-header">
+                <p class="exp-subtitle">Experience</p>
+                <h2>Experience that <span>defines my journey.</span></h2>
+            </div>
+            
+            <div class="timeline">
+                <!-- 1. CYBER SECURITY INTERN -->
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <span class="date">Feb 2026 &#8211; May 2026</span>
+                        <h3>Cyber Security Intern</h3>
+                        <h4>White and Box &#8211; Tech Products &amp; Services</h4>
+                        <p>
+                            Worked on real-time cybersecurity operations including threat detection,
+                            incident response, and monitoring systems. Assisted in identifying
+                            vulnerabilities and strengthening infrastructure security.
+                        </p>
+                        <div class="tags">
+                            <span>SOC</span>
+                            <span>Threat Analysis</span>
+                            <span>Incident Response</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. SECURITY OPERATIONS TRAINEE -->
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <span class="date">2025 &#8211; 2026</span>
+                        <h3>Security Operations Trainee</h3>
+                        <h4>Infotact Solutions</h4>
+                        <p>
+                            Gained hands-on experience in SOC operations, SIEM tools, and log
+                            monitoring. Analyzed alerts, detected suspicious activities, and
+                            responded to simulated cyber incidents.
+                        </p>
+                        <div class="tags">
+                            <span>SIEM</span>
+                            <span>Log Analysis</span>
+                            <span>Threat Monitoring</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. CLOUD SECURITY INTERN -->
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <span class="date">2025</span>
+                        <h3>Cloud Security Intern</h3>
+                        <h4>Aerovant Technology</h4>
+                        <p>
+                            Worked with AWS cloud services including IAM, VPC, S3, CloudTrail,
+                            GuardDuty, and CloudWatch. Focused on securing cloud infrastructure
+                            and implementing best practices.
+                        </p>
+                        <div class="tags">
+                            <span>AWS</span>
+                            <span>IAM</span>
+                            <span>Cloud Security</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. PROJECT EXPERIENCE -->
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <span class="date">2024 &#8211; 2026</span>
+                        <h3>Cybersecurity Projects</h3>
+                        <h4>Personal &amp; Academic Work</h4>
+                        <p>
+                            Developed cybersecurity tools such as port scanners, duplicate file
+                            analyzers, and forensic frameworks using Python. Focused on automation
+                            and real-world security solutions.
+                        </p>
+                        <div class="tags">
+                            <span>Python</span>
+                            <span>Automation</span>
+                            <span>Security Tools</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. FUTURE ROLE -->
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <span class="date">Future</span>
+                        <h3>Cloud Security Engineer</h3>
+                        <h4>Career Goal</h4>
+                        <p>
+                            Aspiring to design secure cloud architectures, implement DevSecOps
+                            pipelines, and protect enterprise systems from advanced cyber threats.
+                        </p>
+                        <div class="tags">
+                            <span>DevSecOps</span>
+                            <span>Cloud Architecture</span>
+                            <span>Security Engineering</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
